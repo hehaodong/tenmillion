@@ -34,7 +34,7 @@ public class YiXiang {
 		// TODO Auto-generated method stub
 //		YiXiang yiXiang = new YiXiang();
 //		yiXiang.calAppearTimes();
-		CalResult.calASC(1, 3);
+		CalResult.calASC(1, 10);
 	}
 
 	private void buyAnim(){
