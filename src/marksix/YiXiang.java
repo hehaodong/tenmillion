@@ -1,5 +1,6 @@
 package marksix;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,10 +33,16 @@ public class YiXiang {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//		YiXiang yiXiang = new YiXiang();
+		YiXiang yiXiang = new YiXiang();
+		//every Zodiac appear times
 //		yiXiang.calAppearTimes();
+		
+//		yiXiang.calAppearSpace();
+		//calculate Even or odd Times
 		CalResult.calEvenTimes(1, 200);
-//		CalResult.calASC(1, 4);
+		//Count the rate of  per issue 
+//		CalResult.calASC(1,200);
+//		yiXiang.calResult();
 	}
 
 	private void buyAnim(){
@@ -334,8 +341,9 @@ public class YiXiang {
 	 * @author:   	hehaodong
 	 */
 	private void calAppearTimes() {
-		String result = HttpGet.sendGet("2009");
+		String result = HttpGet.sendGet("2016");
 		System.out.println(result);
+//		result = Result.data2017;
 		if(result == null || "".equals(result)) {
 			return;
 		}
@@ -353,8 +361,53 @@ public class YiXiang {
 					times++;
 				}
 			}
+			System.out.println(ANIM[i]+"出现"+times+"次");
+//			System.out.println(times);
+		}
+	}
+	/**
+	 * 计算间隔
+	 * 
+	 * @Description 
+	 * @return void
+	 * @date： 2017年9月2日 上午10:47:25
+	 * @author:   	hehaodong
+	 */
+	private void calAppearSpace() {
+		String result = HttpGet.sendGet("2013");
+//		System.out.println(result);
+		result = Result.data2017;
+		
+		if(result == null || "".equals(result)) {
+			return;
+		}
+		List<MarkSix> markSixList = JSONArray.parseArray(result,MarkSix.class);
+		//重新排序
+		Collections.reverse(markSixList);
+		for (int i = 0; i < ANIM.length; i++) {
+			int times = 0;
+			int lastPeriod = 0;
+			for (int j = 0;j<markSixList.size();j++) {
+				MarkSix markSix = markSixList.get(j);
+				int stage = Integer.parseInt(markSix.getStage().substring(0, 3));
+				//以逗号分隔，封装好数据
+				String currentResult[] = getClearAnimal(markSix).split(",");
+				Set<String> resultSet = new HashSet<String>(Arrays.asList(currentResult)); 
+//				if(j>0) {
+					if(resultSet.contains(ANIM[i])) {
+						
+						System.out.println(ANIM[i]+"在"+stage+"期出现,相隔"+(stage-lastPeriod)+"期");
+						lastPeriod = stage;
+					}
+//				}
+//				if(resultSet.contains(ANIM[i])) {
+//					System.out.println(ANIM[i]+"在"+markSix.getStage()+"期出现");
+//					times++;
+//				}
+				
+			}
 //			System.out.println(ANIM[i]+"出现"+times+"次");
-			System.out.println(times);
+			System.out.println("---------------------------");
 		}
 	}
 }

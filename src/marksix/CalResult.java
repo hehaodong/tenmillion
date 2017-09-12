@@ -28,15 +28,18 @@ public class CalResult {
 	 * @author:   	hehaodong
 	 */
 	public static void calASC(int currentPeriod,int space) {
-//		String result = HttpGet.sendGet("");
+//		String result = HttpGet.sendGet("2012");
 		String result = Result.data2017;
-		System.out.println(result);
+//		System.out.println(result);
 		if(result == null || "".equals(result)) {
 			return;
 		}
 		List<MarkSix> markSixList = JSONArray.parseArray(result,MarkSix.class);
 		//ÖØÐÂÅÅÐò
 //		Collections.reverse(markSixList);
+		if(space > markSixList.size()) {
+			space = markSixList.size();
+		}
 		List<MarkSix> newList = markSixList.subList(currentPeriod-1, space);
 		for (int i = 0; i < ANIM.length; i++) {
 			int times = 0;
