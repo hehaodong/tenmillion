@@ -39,10 +39,11 @@ public class YiXiang {
 		
 //		yiXiang.calAppearSpace();
 		//calculate Even or odd Times
-		CalResult.calEvenTimes(1, 200);
+//		CalResult.calEvenTimes(1, 200);
 		//Count the rate of  per issue 
-//		CalResult.calASC(1,200);
+		CalResult.calASC(1,10);
 //		yiXiang.calResult();
+//		yiXiang.calPeriodLastPeriod();
 	}
 
 	private void buyAnim(){
@@ -189,113 +190,6 @@ public class YiXiang {
 	private String clearDouble(String str){
 		 return str.replaceAll("(?s)(.)(?=.*\\1)", ""); 
 	}
-	private void calAinm(){
-		
-		Set<String> animal = new HashSet<String>();
-		for (int i = 0; i < ANIM.length; i++) {
-			animal.add(ANIM[i]);
-		}
-		Set<String> result = new HashSet<String>();
-		Set<String> set1 = new HashSet<String>(){{
-			add("猪");
-			add("龙");
-			add("猴");
-			add("狗");
-			add("蛇");
-			add("猪");
-			add("兔");
-		}};
-		Set<String> set2 = new HashSet<String>(){{
-			add("龙");
-			add("鸡");
-			add("牛");
-			add("羊");
-			add("猴");
-			add("鼠");
-			add("马");
-		}};
-		Set<String> set3 = new HashSet<String>(){{
-			add("猪");
-			add("羊");
-			add("虎");
-			add("龙");
-			add("鼠");
-			add("猪");
-			add("虎");
-		}};
-		Set<String> set4 = new HashSet<String>(){{
-			add("羊");
-			add("羊");
-			add("羊");
-			add("马");
-			add("虎");
-			add("羊");
-			add("鸡");
-		}};
-		Set<String> set5 = new HashSet<String>(){{
-			add("虎");
-			add("兔");
-			add("马");
-			add("蛇");
-			add("兔");
-			add("猴");
-			add("兔");
-		}};
-		Set<String> set6 = new HashSet<String>(){{
-			add("牛");
-			add("猪");
-			add("猴");
-			add("鸡");
-			add("兔");
-			add("猴");
-			add("狗");
-		}};
-		
-		List<Set> resultList = new ArrayList<Set>();
-		resultList.add(set1);
-		resultList.add(set2);
-		resultList.add(set3);
-		resultList.add(set4);
-		resultList.add(set5);
-		resultList.add(set6);
-				
-		for (int i = 0; i < resultList.size(); i++) {
-			Set<String> resultSet1 = resultList.get(i);
-			Set<String> resultSet2 = resultList.get(i+1);
-			Set<String> resultSet3 = resultList.get(i+2);
-			
-			System.out.println("前二期"+resultSet1.toString());
-			System.out.println("前一期"+resultSet2.toString());
-			System.out.println("本期"+resultSet3.toString());
-			result.clear();
-			result.addAll(resultSet1);
-			result.addAll(resultSet2);
-			System.out.println("并集："+result);
-			
-			
-			animal.removeAll(result);
-			System.out.println("差集："+animal);
-			
-			resultSet3.retainAll(animal);
-			System.out.println("交集："+resultSet3);
-			resultSet3.clear();
-			
-		}
-		
-		result.clear();
-		result.addAll(set2);
-		result.addAll(set3);
-		System.out.println("并集："+result);
-		
-		
-		animal.removeAll(result);
-		System.out.println("差集："+animal);
-		
-		set4.retainAll(animal);
-		System.out.println("交集："+set4);
-		
-		
-	}
 	
 	public static boolean useSet(String[] arr, String targetValue) {
 	 Set<String>set = new HashSet<String>(Arrays.asList(arr));
@@ -408,6 +302,90 @@ public class YiXiang {
 			}
 //			System.out.println(ANIM[i]+"出现"+times+"次");
 			System.out.println("---------------------------");
+		}
+	}
+	/**
+	 * 
+	 * 上期出现下期继续买
+	 * @Description 
+	 * @return void
+	 * @date： 2017年9月21日 上午10:27:25
+	 * @author:   	hehaodong
+	 */
+	private void calPeriodByPeriod() {
+//		String result = HttpGet.sendGet("2013");
+		String result = "";
+		// System.out.println(result);
+		result = Result.data2017;
+
+		if (result == null || "".equals(result)) {
+			return;
+		}
+		List<MarkSix> markSixList = JSONArray.parseArray(result, MarkSix.class);
+		// 重新排序
+		Collections.reverse(markSixList);
+		int i = 0;
+		for (int j = 1; j < markSixList.size(); j++) {
+			MarkSix markSix = markSixList.get(j);
+
+			int stage = Integer.parseInt(markSix.getStage().substring(0, 3));
+			// 以逗号分隔，封装好数据
+			String currentResult[] = getClearAnimal(markSix).split(",");
+			if(i >= currentResult.length) {
+				i = 0;
+			}
+			// 上一期的
+			Set<String> resultSet = new HashSet<String>(
+					Arrays.asList(getClearAnimal(markSixList.get(j - 1)).split(",")));
+
+			if (resultSet.contains(currentResult[i])) {
+				System.out.println(currentResult[i] + "------" + stage);
+			}
+			
+			i++;
+		}
+	}
+	/**
+	 * 
+	 * 上期出现下期继续买
+	 * @Description 
+	 * @return void
+	 * @date： 2017年9月21日 上午10:27:25
+	 * @author:   	hehaodong
+	 */
+	private void calPeriodLastPeriod() {
+//		String result = HttpGet.sendGet("");
+		// System.out.println(result);
+		String result = Result.data2017;
+
+		if (result == null || "".equals(result)) {
+			return;
+		}
+		List<MarkSix> markSixList = JSONArray.parseArray(result, MarkSix.class);
+		// 重新排序
+		Collections.reverse(markSixList);
+//		int i = 0;
+		for (int i = 0; i < ANIM.length; i++) {
+			for (int j = 1; j < markSixList.size(); j++) {
+				MarkSix markSix = markSixList.get(j);
+	
+				int stage = Integer.parseInt(markSix.getStage().substring(0, 3));
+				// 以逗号分隔，封装好数据
+				String currentResult[] = getClearAnimal(markSix).split(",");
+				// 上一期的
+				Set<String> resultSet = new HashSet<String>(
+						Arrays.asList(getClearAnimal(markSixList.get(j - 1)).split(",")));
+				
+				Set<String> currentResultSet = new HashSet<String>(
+						Arrays.asList(currentResult));
+	
+				if (resultSet.contains(ANIM[i])) {
+					if (currentResultSet.contains(ANIM[i])) {
+						System.out.println(ANIM[i] + "------" + stage);
+					}
+				}
+			}
+			System.out.println("-------------------------");
 		}
 	}
 }

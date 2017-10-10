@@ -72,6 +72,7 @@ public class CalResult {
 		if(result == null || "".equals(result)) {
 			return;
 		}
+		
 		List<MarkSix> markSixList = JSONArray.parseArray(result,MarkSix.class);
 		//ÖØĞÂÅÅĞò
 		Collections.reverse(markSixList);
