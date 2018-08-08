@@ -29,7 +29,8 @@ public class CalResult {
 	 */
 	public static void calASC(int currentPeriod,int space) {
 //		String result = HttpGet.sendGet("2012");
-		String result = Result.data2017;
+		String result = Result.data2018;
+//		System.out.println(result);
 //		System.out.println(result);
 		if(result == null || "".equals(result)) {
 			return;

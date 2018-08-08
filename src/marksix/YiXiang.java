@@ -41,7 +41,7 @@ public class YiXiang {
 		//calculate Even or odd Times
 //		CalResult.calEvenTimes(1, 200);
 		//Count the rate of  per issue 
-		CalResult.calASC(1,10);
+		CalResult.calASC(1,88);
 //		yiXiang.calResult();
 //		yiXiang.calPeriodLastPeriod();
 	}
@@ -235,9 +235,10 @@ public class YiXiang {
 	 * @author:   	hehaodong
 	 */
 	private void calAppearTimes() {
-		String result = HttpGet.sendGet("2016");
-		System.out.println(result);
-//		result = Result.data2017;
+//		String result = HttpGet.sendGet("2016");
+//		System.out.println(result);
+////		result = Result.data2017;
+		String result = Result.data2018;
 		if(result == null || "".equals(result)) {
 			return;
 		}
@@ -268,9 +269,9 @@ public class YiXiang {
 	 * @author:   	hehaodong
 	 */
 	private void calAppearSpace() {
-		String result = HttpGet.sendGet("2013");
+//		String result = HttpGet.sendGet("2013");
 //		System.out.println(result);
-		result = Result.data2017;
+		String result = Result.data2017;
 		
 		if(result == null || "".equals(result)) {
 			return;
@@ -316,7 +317,7 @@ public class YiXiang {
 //		String result = HttpGet.sendGet("2013");
 		String result = "";
 		// System.out.println(result);
-		result = Result.data2017;
+		result = Result.data2018;
 
 		if (result == null || "".equals(result)) {
 			return;
